@@ -1,0 +1,21 @@
+# Betriebssystem
+.DS_Store
+Thumbs.db
+
+# Editor / IDE
+.vscode/
+.idea/
+
+# PHP / Server
+vendor/
+*.log
+
+# Uploads (benutzergenerierte Dateien)
+uploads/
+
+# Konfigurationsdateien mit Zugangsdaten
+config.php
+
+# Temporäre Dateien
+tmp/
+cache/

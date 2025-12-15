@@ -1,0 +1,16 @@
+<?php
+/**
+ * Beispiel-Konfigurationsdatei
+ * Kopiere diese Datei zu config.php und trage deine echten Zugangsdaten ein.
+ */
+
+$DB_HOST = "localhost";
+$DB_USER = "phpmyadmin";
+$DB_PASS = "password_here";
+$DB_NAME = "Whiskybewertungen";
+
+$UPLOAD_DIR_ABSOLUTE = "/var/www/html/Whisky_Bewertung/uploads/";
+$UPLOAD_DIR_WEB = "uploads/";
+
+// Charset
+$DB_CHARSET = "utf8mb4";
