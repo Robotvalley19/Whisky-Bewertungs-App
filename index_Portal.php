@@ -4,6 +4,7 @@ $dienste = [
     ["name" => "phpMyAdmin", "port" => 5001],
     ["name" => "Whiskyerfassung", "url"  => "http://192.168.178.96:5000/index_Bewertung.php"],
     ["name" => "Whisky Dashboard", "url"  => "http://192.168.178.96:5000/index_Dashboard.php"],
+    ["name" => "Whisky Dashboard", "url"  => "http://192.168.178.96:5000/syslog.php"],
 ];
 
 // Aktuelle LAN-IP automatisch ermitteln
