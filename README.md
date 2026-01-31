@@ -1,247 +1,227 @@
-# 🥃 Whisky Management & Bewertungs-System
+# Whisky Portal – Webbasierte Whiskyverwaltung
 
-Ein webbasiertes PHP/MySQL-Projekt zur Verwaltung, Dokumentation und Bewertung einer privaten Whisky-Sammlung – inklusive automatischem Raspberry-Pi Health- & Backup-System.
+Ein vollständiges, praxisnahes PHP/MySQL-Projekt zur Erfassung, Verwaltung und Dokumentation von Whiskys. Das Projekt richtet sich an Entwickler, die ein echtes Full-Stack-Projekt aufbauen möchten, und zeigt Kompetenzen in Webentwicklung, Datenbankmanagement, Serveradministration und Automatisierung. Die Anwendung bietet ein modernes, interaktives Dashboard, intuitive Filter- und Bearbeitungsfunktionen, Upload-Möglichkeiten für Bilder und PDFs sowie ein automatisiertes Health- und Backup-System, speziell für den Betrieb auf einem Raspberry Pi Server optimiert.
 
-Das Projekt besteht aus:
+Dieses Projekt entstand mit dem Ziel, eine zentrale, leicht zu bedienende Whisky-Verwaltungsplattform zu schaffen, die sowohl Hobby-Sammler als auch professionelle Nutzer anspricht. Es kombiniert klassische Webtechnologien wie PHP, MySQL, HTML, CSS und JavaScript mit systemnahen Funktionen wie Bash-Skripten, JSON-Statusdateien und Cron-basierten Automatisierungen. Damit demonstriert es ein breites Skillset von Frontend-Entwicklung, Backend-Logik, Datenbankdesign bis hin zu Server-Monitoring und Automatisierung.
 
-- einem **Erfassungsformular** (Upload von Bildern & PDFs)
-- einem **interaktiven Dashboard** mit Filter-, Such- und AJAX-Editierfunktionen
-- moderner, animierter Oberfläche (Canvas-Bubble-Hintergrund)
-- einem **Server Health Dashboard**
-- einem **automatisierten Backup-Skript** (Datenbank + Uploads)
+Durch die Verwendung eines Raspberry Pi als Hostsystem zeigt das Projekt praxisnah, wie man kleine Server effizient überwachen, Backups automatisieren und eine Webanwendung stabil betreiben kann. Gleichzeitig bietet es moderne UI-Elemente wie AJAX-basierte Bearbeitung, Kartenansichten, Pagination und Canvas-Animationen, sodass die Anwendung sowohl funktional als auch optisch ansprechend ist.
 
 ---
 
-## ✨ Features
+## 📌 Projektübersicht
 
-### 🥃 Whisky-Verwaltung
-- Whisky-Erfassung mit Metadaten
-- Bild- & PDF-Upload
-- Dashboard mit Kartenansicht
-- Sidebar-Filter (Live-Suche)
-- AJAX-Speicherung einzelner Felder
-- Datumskonvertierung (DD.MM.YYYY ⇄ MySQL DATE)
-- Statusverwaltung (Offen, Geschlossen, Leer, Sample)
-- Responsive Layout
-- UTF-8 / utf8mb4 sicher
+Das Projekt besteht aus fünf Hauptkomponenten:
 
-### 🖥️ Raspberry Pi Health & Backup
-- Automatische Überprüfung von:
-  - SD-Karten-Mount
-  - MariaDB-Status
-  - Upload-Verzeichnis
-  - Speicherplatz
-- CPU-Last (1-Minuten-Load)
-- RAM-Auslastung (%)
-- CPU-Temperatur
-- Letzte 20 `journalctl`-Einträge
-- Automatischer Datenbank-Dump (mysqldump)
-- Archivierung des Upload-Ordners (tar.gz)
-- JSON-Statusdatei für Web-Dashboard
-- USB-Backup-Unterstützung
-- Cronjob-fähig
+1. **Whisky Portal** – Startseite / Dienstübersicht
+2. **Whiskyerfassung** – Eingabeformular
+3. **Whisky Dashboard** – Verwaltung & Bearbeitung
+4. **Raspberry Pi Health & Backup System**
+5. **Server- & Dienstkonfiguration** – PHP, Apache, MySQL
+
+**Datenbankname:** `Whiskybewertungen`
 
 ---
 
-## 🛠️ Technik
+## 📂 Verzeichnisstruktur
 
-### Webanwendung
-- PHP (procedural + AJAX)
-- MySQL / MariaDB
-- HTML5 / CSS3
-- JavaScript (Fetch API)
-- Canvas Animation
-- Lokale Fonts (keine externen Requests)
+**Web-Anwendung:** `/var/www/html/Whisky_Bewertung/`
 
-### Server & Backup
-- Bash (Backup-Skript)
-- jq (JSON-Erstellung)
-- mysqldump
-- tar
-- journalctl
-- cron (optional)
+* `index_Portal.php`
+* `index_Bewertung.php`
+* `index_Dashboard.php`
+* `health_dashboard.php`
+* `uploads/`
+* `README.md`
 
----
+**System-Skripte auf Raspberry Pi:**
 
-## 📂 Projektstruktur
-
-```
-/
-├── index.php              # Whisky-Erfassung
-├── dashboard.php          # Whisky-Dashboard
-├── health_dashboard.php   # Raspberry Pi Health Dashboard
-├── backup_script.sh       # Automatisches Backup-Skript
-├── config.php.example     # Beispiel-Konfiguration
-├── uploads/               # Upload-Ordner (ignoriert durch git)
-├── README.md
-├── LICENSE
-└── .gitignore
-```
-
-Systemebene (Beispiel Raspberry Pi):
-
-```
-/usr/local/bin/backup_script.sh
-/home/<user>/raspi_status.json
-/mnt/usb/Whiskybewertungen_backup.sql
-/mnt/usb/Whisky_uploads_backup.tar.gz
-```
+* `/usr/local/bin/backup_script.sh`
+* `/home/<user>/raspi_status.json`
+* `/mnt/usb/Whiskybewertungen_backup.sql`
+* `/mnt/usb/Whisky_Bewertung_uploads_backup.tar.gz`
 
 ---
 
-## ⚙️ Installation
+## 🖥️ Systemvoraussetzungen
 
-### 1. Repository klonen
+**Server:**
 
-```bash
-git clone <repository-url>
-```
+* Linux (Debian, Ubuntu Server, Raspberry Pi OS)
+* Apache 2
+* PHP 8.2
+* MySQL oder MariaDB
+* jq (für JSON-Erstellung im Backup-Skript)
 
----
+**Optional:**
 
-### 2. Konfiguration erstellen
+* systemd oder cron für automatische Backup-Ausführung
+* USB-Stick oder externes Laufwerk für Offsite-Backups
 
-```
-config.php.example → config.php
-```
+**PHP-Erweiterungen:**
 
-Datenbank-Zugangsdaten eintragen.
-
----
-
-### 3. Datenbank anlegen
-
-Datenbank:
-```
-Whiskybewertungen
-```
-
-Tabelle:
-```
-whisky
-```
-
-(Felder siehe unten)
+* mysqli
+* mbstring
+* fileinfo
+* gd (empfohlen)
 
 ---
 
-### 4. Upload-Ordner erstellen
+## ⚙️ Raspberry Pi Health & Backup System
 
-```bash
-mkdir uploads
-chmod 775 uploads
-```
+Automatisiertes Überwachungs- und Backup-System für Raspberry Pi Server.
+
+### Funktionen
+
+* Überprüfung von SD-Karten-Mount, Datenbank-Erreichbarkeit, Upload-Ordner und Speicherplatz
+* CPU-Last, RAM-Auslastung, CPU-Temperatur
+* Letzte 20 journalctl-Einträge
+* Automatisches Backup von MySQL-Datenbank und Upload-Ordner (Bilder & PDFs)
+* JSON-Statusdatei für Dashboard-Visualisierung
 
 ---
 
-### 5. Optional: Backup-Skript aktivieren
+## 💾 Backup-Skript (`backup_script.sh`)
 
-```bash
-chmod +x backup_script.sh
-sudo mv backup_script.sh /usr/local/bin/
+* Erstellt Datenbank-Dump (`mysqldump`)
+* Archiviert Upload-Ordner
+* Speichert Backups auf USB-Stick
+* Erzeugt JSON-Statusdatei
+* Kopiert JSON zusätzlich ins Home-Verzeichnis
+* Liefert Statusinformationen für Health-Dashboard
+
+**Beispielausgabe:**
+
+```
+Backup abgeschlossen: Status OK, Backup OK=true
+Backups und JSON auf USB-Stick: /mnt/usb
+JSON zusätzlich im Home-Verzeichnis: /home/pi/raspi_status.json
 ```
 
-Cronjob (täglich um 03:00 Uhr):
+**Cron-Empfehlung:**
 
-```bash
+```
 0 3 * * * /usr/local/bin/backup_script.sh
+```
+
+---
+
+## 📊 Health Dashboard (`health_dashboard.php`)
+
+Weboberfläche im Dark-Whisky-Theme zur Anzeige von:
+
+* Gesamtstatus
+* SD-Mount-Status
+* Datenbankstatus
+* Backupstatus
+* CPU-Auslastung, RAM-Auslastung, CPU-Temperatur
+* SD-Kartenbelegung
+* Syslog-Auszug
+
+**Statusanzeige:**
+
+* 🟢 Grün → OK
+* 🔴 Rot → Fehler
+
+Das Dashboard liest `raspi_status.json`.
+
+---
+
+## PHP-Konfiguration (empfohlen)
+
+```
+upload_max_filesize = 2G
+post_max_size = 2G
+memory_limit = 2G
+max_execution_time = 300
+max_input_time = 300
+default_charset = UTF-8
 ```
 
 ---
 
 ## 🗄️ Datenbank
 
-Die Tabelle `whisky` sollte u.a. folgende Felder enthalten:
+**Tabelle:** `whisky`
 
-- id
-- Name
-- Brennerei
-- Land_Region
-- Sorte
-- Alter
-- Alkoholgehalt
-- Flaschengroesse
-- Abfueller
-- Kaufdatum
-- Kaufpreis
-- Bild
-- PDF
-- Status
-- Beschreibung
-- Fassreifung
-- Anzahl_der_Flaschen
-- Fundort
+**Felder:**
 
-*(Schema kann projektspezifisch erweitert werden)*
-
----
-
-## 🖥️ Health Dashboard
-
-Das Health-Dashboard liest eine automatisch erzeugte Datei:
-
-```
-raspi_status.json
-```
-
-Anzeige:
-
-- Gesamtstatus (OK / Fehler)
-- Mount-Status
-- Datenbankstatus
-- Backupstatus
-- CPU / RAM / Temperatur
-- SD-Kartenbelegung
-- Syslog-Auszug
-
-Farbcodierung:
-
-- Grün → OK  
-- Rot → Fehler  
-
-Dark-Whisky-Theme passend zum Hauptprojekt.
+* id
+* Name
+* Brennerei
+* Land_Region
+* Sorte
+* Alter
+* Alkoholgehalt
+* Flaschengroesse
+* Abfueller
+* Kaufdatum
+* Kaufpreis
+* Bild
+* PDF
+* Fassreifung
+* Beschreibung
+* Datum_der_Flaschenoeffnung
+* Grund_der_Flaschenoeffnung
+* Status
+* Fundort
+* Anzahl_der_Flaschen
 
 ---
 
-## 🔐 Sicherheitshinweis
+## 🖼️ Whisky Portal (`index_Portal.php`)
 
-Dieses Projekt ist für **private Nutzung** gedacht.
-
-Für öffentliche Nutzung empfohlen:
-
-- Prepared Statements
-- Login / Authentifizierung
-- Upload-Validierung (MIME-Check)
-- CSRF-Schutz
-- Rechteverwaltung
-- Kein 777 in Produktivumgebungen
+* Startseite mit Dienstübersicht
+* Automatische IP-Erkennung
+* Canvas-Hintergrundanimation
+* Verlinkung zum Health Dashboard
 
 ---
 
-## 📜 Lizenz
+## ✍️ Whiskyerfassung (`index_Bewertung.php`)
 
-MIT License – siehe [LICENSE](LICENSE)
+* Formular zur Neueingabe
+* Bild- & PDF-Upload
+* UTF-8-Unterstützung
+* Speicherung in MySQL
+* Upload-Verzeichnis: `/var/www/html/Whisky_Bewertung/uploads/` (muss schreibbar sein)
 
 ---
 
-## 🍂 Hinweis
+## 📊 Whisky Dashboard (`index_Dashboard.php`)
 
-Dieses Projekt ist aus persönlichem Interesse entstanden und erhebt keinen Anspruch auf Vollständigkeit oder professionelle Einsatzreife.
+* Kartenansicht aller Whiskys
+* Filter & Pagination
+* AJAX-Bearbeitung
+* Statusverwaltung
+* Download von Bildern & PDFs
 
-Viel Spaß beim Sammeln & Genießen 🥃
+---
+
+## 🔒 Sicherheit
+
+* Keine Zugangsdaten in GitHub committen
+* `config.php` oder `.env` verwenden
+* `uploads/` nicht mit Inhalten hochladen
+* Backup-Skript nicht öffentlich zugänglich machen
+* USB-Backups regelmäßig testen
+
+---
+
+## 📄 Lizenz
+
+MIT License
 
 ---
 
 ## 🔤 Fonts
 
-Dieses Projekt verwendet die Schriftarten:
+Dieses Projekt verwendet die Schriftarten **Cinzel** und **Open Sans**. Sie sind lokal eingebunden (offline) und stehen unter der SIL Open Font License (OFL).
+Quelle: [Google Fonts](https://fonts.google.com)
 
-- **Cinzel**
-- **Open Sans**
+---
 
-✔ Lokal eingebunden (offline)  
-✔ Keine externen Google-Requests  
-✔ Lizenz: SIL Open Font License (OFL)  
+## 👨‍💻 Autor
 
-Quelle:  
-https://fonts.google.com
+Robotvalley19  
+
+Eigenständig entwickelt als praxisorientiertes Full-Stack-Projekt.
