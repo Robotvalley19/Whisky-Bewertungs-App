@@ -103,6 +103,7 @@ $result = $conn->query("SELECT * FROM whisky $filterSQL ORDER BY id DESC LIMIT $
 <meta charset="UTF-8">
 <title>Whisky Dashboard</title>
 
+<style>
 /* === LOKALE FONTS (Fallback-sicher) === */
 @font-face {
     font-family: 'Cinzel';
@@ -131,7 +132,7 @@ $result = $conn->query("SELECT * FROM whisky $filterSQL ORDER BY id DESC LIMIT $
     font-style: normal;
 }
 
-<style>
+    
 html,body{margin:0;padding:0;font-family:'Open Sans',sans-serif;height:100%;background:radial-gradient(circle at bottom right,#2b1a0d,#0e0704 80%);color:#e0c097;overflow-x:hidden;}
 #background{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;}
 h1.page-title{font-family:'Cinzel',serif;font-size:3em;text-align:center;margin:20px 0;color:#f4d58d;text-shadow:0 0 15px rgba(244,213,141,0.4);position:relative;z-index:1;}
